@@ -8,9 +8,11 @@ import barabasnautilus.property_page
 
 class BarabasPropertyPageProvider(GObject.GObject, Nautilus.PropertyPageProvider):
     def __init__(self):
+        """Empty docstring"""
         self.__client = BarabasClient()
 
     def get_property_pages(self, files): 
+        """Empty docstring"""
         if len(files) != 1:
             return
 
