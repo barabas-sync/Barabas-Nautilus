@@ -163,7 +163,6 @@
                         <child>
                           <object class="GtkCellRendererProgress" id="cellrendererprogress1"/>
                           <attributes>
-                            <attribute name="text">0</attribute>
                             <attribute name="value">1</attribute>
                           </attributes>
                         </child>
@@ -197,7 +196,6 @@
     </child>
     <child>
       <object class="GtkLabel" id="statusLabel">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="label">PROGRAMMED</property>
       </object>
@@ -226,12 +224,5 @@
       <!-- column-name upload_in_progress -->
       <column type="gboolean"/>
     </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">hjjh</col>
-        <col id="1">50</col>
-        <col id="2">False</col>
-      </row>
-    </data>
   </object>
 </interface>
