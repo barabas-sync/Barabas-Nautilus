@@ -29,9 +29,11 @@ class PropertyPage:
                 client.get_local_file_info(uri)
         self.local_file.connect_to_signal("Synced", self.on_local_synced)
         self.remote_file = None
+        self.version_ids_to_iter_map = {}
         
         uibuilder.connect_signals(self)
         self.box = uibuilder.get_object('propertyPageGrid')
+        self.box.connect('destroy', self.on_property_page_quit)
         self.taglist_model = uibuilder.get_object('taglist_model')
         self.versions_model = uibuilder.get_object('version_model')
         
@@ -58,6 +60,10 @@ class PropertyPage:
                 set_junction_sides(Gtk.JunctionSides.TOP)
         uibuilder.get_object('manageTagsToolbar').get_style_context().\
                 add_class("inline-toolbar")
+
+    def on_property_page_quit(self, property_page):
+        """The property page quits"""
+        self.local_file.Release()
 
     def prepare_remote_file(self):
         """Called when the remote file is available. Connects to signals etc"""
@@ -100,6 +106,7 @@ class PropertyPage:
         version = self.remote_file.get_version(new_version_id)
         
         iter = self.versions_model.append((version.GetName(), 0, False))
+        self.version_ids_to_iter_map[new_version_id] = iter
         version.connect_to_signal("UploadStarted",
                                   lambda: self.on_upload_started(iter))
         version.connect_to_signal("UploadProgressed",
@@ -109,7 +116,9 @@ class PropertyPage:
 
     def on_version_removed(self, old_version_id):
         """Empty docstring"""
-        print "Removing ", old_version_id
+        version_iter = self.version_ids_to_iter_map[old_version_id]
+        del self.version_ids_to_iter_map[old_version_id]
+        self.versions_model.remove(version_iter)
 
     def on_upload_started(self, iter):
         """Empty docstring"""
