@@ -16,7 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Barabas Nautilus Plugin. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk
+import pygtk
+import gtk
 
 class PropertyPage:
     """The property page that gives Barabas status information for this file"""
@@ -43,7 +44,7 @@ class PropertyPage:
         self.taglist.get_selection().connect('changed',
                                              self.tag_selection_changed)
         self.tagnamecolumn = uibuilder.get_object('tagnamecolumn')
-        self.tagnamecolumn.set_sort_order(Gtk.SortType.ASCENDING)
+        self.tagnamecolumn.set_sort_order(gtk.SORT_ASCENDING)
         self.tagnamecolumn.clicked()
         
         self.__initialized_sync = False 
@@ -54,12 +55,12 @@ class PropertyPage:
         
         #TODO: this should be in the glade file IMHO, but I don't think this
 		# is already exposed in GLade's UI.        
-        uibuilder.get_object('tagsScrolledWindow').get_style_context().\
-                set_junction_sides(Gtk.JunctionSides.BOTTOM)
-        uibuilder.get_object('manageTagsToolbar').get_style_context().\
-                set_junction_sides(Gtk.JunctionSides.TOP)
-        uibuilder.get_object('manageTagsToolbar').get_style_context().\
-                add_class("inline-toolbar")
+        #uibuilder.get_object('tagsScrolledWindow').get_style_context().\
+        #        set_junction_sides(Gtk.JunctionSides.BOTTOM)
+        #uibuilder.get_object('manageTagsToolbar').get_style_context().\
+        #        set_junction_sides(Gtk.JunctionSides.TOP)
+        #uibuilder.get_object('manageTagsToolbar').get_style_context().\
+        #        add_class("inline-toolbar")
 
     def on_property_page_quit(self, property_page):
         """The property page quits"""
