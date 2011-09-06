@@ -69,6 +69,8 @@ class PropertyPage:
         """Called when the remote file is available. Connects to signals etc"""
         self.remote_file.connect_to_signal("Tagged",
                                            self.on_new_tag)
+        self.remote_file.connect_to_signal("TagRemoved",
+                                           self.on_deleted_tag)
         self.remote_file.connect_to_signal("VersionAdded",
                                            self.on_version_added)
         self.remote_file.connect_to_signal("VersionRemoved",
@@ -162,7 +164,7 @@ class PropertyPage:
         if not found:
             self.taglist_model.append((tag, False))
     
-    def on_deleted_tag(self, tag, local):
+    def on_deleted_tag(self, tag):
         """Empty docstring"""
         def check_and_delete(model, path, iter, userdata):
             """Empty docstring"""
